@@ -1,0 +1,62 @@
+SQL> 
+SQL> select firstname "FIRST", lastname "LAST" from customers where STATE='CA' order by last, first;
+
+FIRST      LAST                                                                                                                     
+---------- ----------                                                                                                               
+MICHELL    DAUM                                                                                                                     
+JORGE      PEREZ                                                                                                                    
+RYAN       THOMPSON                                                                                                                 
+
+SQL> 
+SQL> select title, category from books where retail-cost < 15 order by category, title;
+
+TITLE                          CATEGORY                                                                                             
+------------------------------ ------------                                                                                         
+BIG BEAR AND LITTLE DOVE       CHILDREN                                                                                             
+HANDCRANKED COMPUTERS          COMPUTER                                                                                             
+COOKING WITH MUSHROOMS         COOKING                                                                                              
+THE WOK WAY TO COOK            COOKING                                                                                              
+REVENGE OF MICKEY              FAMILY LIFE                                                                                          
+BODYBUILD IN 10 MINUTES A DAY  FITNESS                                                                                              
+HOW TO GET FASTER PIZZA        SELF HELP                                                                                            
+
+7 rows selected.
+
+SQL> 
+SQL> select firstname, lastname, region from customers WHERE NOT region='NW' AND NOT region='N' AND NOT region='NE' order by lastname DESC, firstname ASC;
+
+FIRSTNAME  LASTNAME   RE                                                                                                            
+---------- ---------- --                                                                                                            
+RYAN       THOMPSON   W                                                                                                             
+LEILA      SMITH      SE                                                                                                            
+STEVE      SCHELL     SE                                                                                                            
+JORGE      PEREZ      W                                                                                                             
+NICHOLAS   NGUYEN     SE                                                                                                            
+BONITA     MORALES    SE                                                                                                            
+GREG       MONTIASA   SE                                                                                                            
+JAKE       LUCAS      SE                                                                                                            
+TAMMY      GIANA      SW                                                                                                            
+MICHELL    DAUM       W                                                                                                             
+
+10 rows selected.
+
+SQL> 
+SQL> select firstname, lastname, region from customers WHERE region NOT IN ('N','NW','NE') order by lastname DESC, firstname ASC;
+
+FIRSTNAME  LASTNAME   RE                                                                                                            
+---------- ---------- --                                                                                                            
+RYAN       THOMPSON   W                                                                                                             
+LEILA      SMITH      SE                                                                                                            
+STEVE      SCHELL     SE                                                                                                            
+JORGE      PEREZ      W                                                                                                             
+NICHOLAS   NGUYEN     SE                                                                                                            
+BONITA     MORALES    SE                                                                                                            
+GREG       MONTIASA   SE                                                                                                            
+JAKE       LUCAS      SE                                                                                                            
+TAMMY      GIANA      SW                                                                                                            
+MICHELL    DAUM       W                                                                                                             
+
+10 rows selected.
+
+SQL> 
+SQL> spool off
