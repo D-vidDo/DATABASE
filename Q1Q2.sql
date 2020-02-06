@@ -1,10 +1,7 @@
 set echo on
 set pagesize 66
 set linesize 132
-spool
-c:
-/cprg250/Q1Q2.txt
-
+spool c:/cprg250/Q1Q2.txt
 
 -- QUESTION 1
 SELECT customer_number, account_type, date_created
@@ -21,3 +18,4 @@ FROM wgb_transaction
 WHERE TRANSACTION_number != 0
 ORDER BY 1;
 
+spool off
