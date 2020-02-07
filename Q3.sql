@@ -1,7 +1,8 @@
-set echo on
+set echo off
 set pagesize 66
 set linesize 132
 spool c:/cprg250/Q3.txt
+set feedback on
 
 -- QUESTION 3
 SELECT account_type

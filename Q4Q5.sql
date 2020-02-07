@@ -8,7 +8,7 @@ COLUMN "Phone" FORMAT A15
 COLUMN "Customer Name" FORMAT A20
 COLUMN "Date Created" FORMAT A20
 SELECT a.first_name || ' ' || a.surname "Customer Name",
-    '(403)' || SUBSTR(a.phone, 1, 3) ||'-'||SUBSTR(a.phone, 4, 4) "Phone",
+    '(' || area_code || ')' || SUBSTR(a.phone, 1, 3) ||'-'||SUBSTR(a.phone, 4, 4) "Phone",
     b.account_type,
     TO_CHAR(b.date_created, 'FMMonth DD, YYYY') "Date Created"
 FROM wgb_customer a
