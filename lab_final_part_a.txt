@@ -1,0 +1,84 @@
+SQL> 
+SQL> /*REM #1*/
+SQL> SAVEPOINT update_returns;
+
+Savepoint created.
+
+SQL> 
+SQL> INSERT INTO cp_returns (dvd_number)
+  2  SELECT dvd_number
+  3  FROM cp_rental
+  4  WHERE actual_date_returned IS NOT NULL;
+
+5 rows created.
+
+SQL> 
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> 
+SQL> /*REM #2*/
+SQL> SAVEPOINT inactive_customer;
+
+Savepoint created.
+
+SQL> 
+SQL> SELECT customer_no
+  2  FROM cp_customer
+  3  WHERE customer_no NOT IN (SELECT customer_no
+  4  						       FROM cp_rental);
+
+CUSTOMER_NO                                                                                                                         
+-----------                                                                                                                         
+       1004                                                                                                                         
+
+SQL> 
+SQL> DELETE cp_customer
+  2  WHERE customer_no NOT IN (SELECT customer_no
+  3  						       FROM cp_rental);
+
+1 row deleted.
+
+SQL> 
+SQL> SELECT customer_no AS "Customer #", Name AS "Name"
+  2  FROM cp_customer;
+
+Customer # Name                                                                                                                     
+---------- ------------------------------                                                                                           
+      1000 Rogers, Hal                                                                                                              
+      1001 Williams, Mel                                                                                                            
+      1002 Lee, Sarah                                                                                                               
+      1003 Ellard, John                                                                                                             
+      1005 Zink, Penny                                                                                                              
+
+SQL> 
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> 
+SQL> /*REM #3*/
+SQL> SAVEPOINT popular_films;
+
+Savepoint created.
+
+SQL> 
+SQL> UPDATE cp_price
+  2  SET rate_per_day = 3.24
+  3  WHERE rental_class IN (SELECT rental_class
+  4  						FROM cp_price
+  5  						WHERE rate_per_day IN (SELECT MAX(rate_per_day)
+  6  											       FROM cp_price)
+  7  						GROUP BY rental_class);
+
+1 row updated.
+
+SQL> 
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> 
+SQL> 
+SQL> spool off

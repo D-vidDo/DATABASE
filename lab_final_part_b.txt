@@ -1,0 +1,81 @@
+SQL> 
+SQL> DROP TABLE xyz_access
+  2  CASCADE CONSTRAINTS;
+
+Table dropped.
+
+SQL> DROP TABLE xyz_Employee
+  2  CASCADE CONSTRAINTS;
+DROP TABLE xyz_Employee
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> DROP TABLE xyz_EmployeeWebsites
+  2  CASCADE CONSTRAINTS;
+DROP TABLE xyz_EmployeeWebsites
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> DROP TABLE xyz_website
+  2  CASCADE CONSTRAINTS;
+
+Table dropped.
+
+SQL> 
+SQL> 
+SQL> CREATE TABLE xyz_access (
+  2  	 accessCode CHAR(1),
+  3  	 accessDescription VARCHAR2(20)
+  4  );
+
+Table created.
+
+SQL> 
+SQL> ALTER TABLE xyz_access
+  2  ADD CONSTRAINT access_PK PRIMARY KEY (accessCode)
+  3  ADD CONSTRAINT access_CK CHECK (accessCode IN ('M', 'A', 'E', 'C'));
+
+Table altered.
+
+SQL> 
+SQL> CREATE TABLE xyz_Employee (
+  2  	 staffID NUMBER,
+  3  	 emailAddress VARCHAR2(50),
+  4  	 firstName VARCHAR2(30) CONSTRAINT firstName_nn NOT NULL,
+  5  	 lastName VARCHAR2(30) CONSTRAINT lastName_nn NOT NULL,
+  6  	 phoneNumber NUMBER(10),
+  7  	 accessCode CHAR(1),
+  8  	     CONSTRAINT staffID_PK PRIMARY KEY (staffID),
+  9  	     CONSTRAINT emailAddress_UK UNIQUE (emailAddress),
+ 10  	     CONSTRAINT accessCode_FK FOREIGN KEY (accessCode) REFERENCES xyz_access(accessCode)
+ 11  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE xyz_website (
+  2  	 URL VARCHAR2(50),
+  3  	     CONSTRAINT URL_PK PRIMARY KEY (URL)
+  4  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE xyz_EmployeeWebsites (
+  2  	 URL VARCHAR2(50),
+  3  	 staffID NUMBER,
+  4  	 datetimeAccessed DATE,
+  5  	     CONSTRAINT employ_PK PRIMARY KEY (staffID, URL),
+  6  	     CONSTRAINT URL_FK FOREIGN KEY (URL) REFERENCES xyz_website(URL),
+  7  	     CONSTRAINT staffID_FK FOREIGN KEY (staffID) REFERENCES xyz_Employee(staffId)
+  8  );
+
+Table created.
+
+SQL> 
+SQL> 
+SQL> spool off
